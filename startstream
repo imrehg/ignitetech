@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# needs jtvlc
+
+VIDEO=/dev/video0
+AUDIO="alsa://plughw"
+FILE=/home/greg/IgniteTech/ignite.sdp
+RECORDFILE=/home/greg/IgniteTech/record.mpeg
+JUSTINKEY=live_22960193_bF2gSGBk4R7T6jzmua5omMXN4A8FhN
+VLCOP="4l2-dev=${VIDEO}:input-slave=alsa://${AUDIO}:v4l2-standard=0:file-caching=300 "
+LOGGER="--extraintf logger --logfile myvlc.log"
+VLCOUT="#duplicate{dst=display, dst='transcode{venc=x264{keyint=60,idrint=2},vcodec=h264,vb=300,acodec=mp4a,ab=32,channels=2,samplerate=44100}:rtp{dst=127.0.0.1,port=1234,sdp=file://$FILE}', dst=std{access=file,mux=mpeg1,url=file://${RECORDFILE}}"
+
+# Start VLC in the background
+vlc v4l2://${VIDEO} :v4l2-adev=alsa://plughw:1,0 $LOGGER -vvv input_stream --sout="${VLCOUT}" &
+
+# Wait till things settle down
+sleep 4
+
+# Start Justin.tv streaming
+jtvlc-lin-0.41/jtvlc ignitetaipei ${JUSTINKEY} file://${FILE}
