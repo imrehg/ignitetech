@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # needs jtvlc
+# http://apiwiki.justin.tv/mediawiki/images/2/24/Jtvlc-lin-0.41.tar.gz
 
 VIDEO=/dev/video0
 AUDIO="alsa://plughw"
