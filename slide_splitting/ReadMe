@@ -1,0 +1,2 @@
+Place PDF slide in directories with increasing numbers (01..11 in the case of Ignite#3)
+Run this code to split the PDF into PNG files that can be used for the video recording.
